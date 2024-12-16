@@ -31,7 +31,7 @@ func LoadEnv() {
 	err := godotenv.Load("../.././internal/config/db.env")
 	if err != nil {
 
-		log.Fatal(err.Error())
+		log.Println(err.Error())
 	}
 }
 

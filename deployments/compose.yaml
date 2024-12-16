@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  auth_service:
+    image: go-auth-service-img
+    build: 
+      context: ../.
+      dockerfile: ./build/Dockerfile
+    env_file:
+      - .././internal/config/db.env
+    ports:
+      - 8080:8080
+    depends_on:
+      postgres:
+        condition: service_started
+    restart: on-failure
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
+    restart: on-failure
+
+#docker compose -f ./deployments/compose.yaml build
